@@ -1,12 +1,13 @@
 #pragma once
 #include <iostream>
 #include <string>
+using namespace std;
 class Person
 {
 protected:
 	string name;
 	string phone;
-publice:
+public:
 	Person(string name = "", string phone = "");
 	virtual ~Person();
 	string getName() const;

@@ -11,10 +11,12 @@ void Person::setName(const string& name)
 {
     this->name = name;
 }
-bool Person::setPhone(const string& phone) 
-{    if (!isValidPhone(phone)) return false;
-    this->phone = phone;
-    return true;
+void Person::setPhone(const string& phone) 
+{
+    if (isValidPhone(phone)) 
+    {
+        this->phone = phone;
+    }
 }
 bool Person::isValidPhone(const string& phone) 
 {
