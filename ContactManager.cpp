@@ -2,6 +2,7 @@
 #include <fstream>
 #include <algorithm>
 #include <cctype>
+#include <functional>
 string ContactManager::toLower(const string& s) 
 {
     string res = s;
@@ -96,4 +97,33 @@ int ContactManager::deleteByName(const string& name)
         }
     }
     return count;
+}
+vector<Contact> ContactManager::searchByName(const string& keyword) const 
+{
+    vector<Contact> result;
+    string kw = toLower(keyword);
+    for (size_t i = 0; i < contacts.size(); i++) 
+    {
+        if (toLower(contacts[i].getName()).find(kw) != string::npos) 
+        {
+            result.push_back(contacts[i]);
+        }
+    }
+    return result; 
+}
+void ContactManager::sortByName(bool ascending) 
+{
+    if (ascending)
+        sort(contacts.begin(), contacts.end()); 
+    else
+        sort(contacts.begin(), contacts.end(), greater<Contact>());
+}
+map<string, int> ContactManager::statistics() const 
+{
+    map<string, int> stat;
+    for (size_t i = 0; i < contacts.size(); i++) 
+    {
+        stat[contacts[i].getRelationship()]++;
+    }
+    return stat;
 }
