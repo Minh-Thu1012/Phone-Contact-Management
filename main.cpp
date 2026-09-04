@@ -1,15 +1,23 @@
+/*
+    Main program for the Phone Contact Management Application.
+    Provides the user menu and handles interaction with
+    ContactManager to perform contact management operations.
+*/
+
 #include "ContactManager.h"
 #include <iostream>
 #include <limits>
 #include <string>
 
 using namespace std;
+
 static void clearInput() 
 {
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void printMenu() {
+void printMenu() 
+{
     cout << "\n=== QUAN LY DANH BA DIEN THOAI ===\n";
     cout << "1. Hien thi danh sach\n";
     cout << "2. Them lien he moi\n";
@@ -18,9 +26,11 @@ void printMenu() {
     cout << "5. Xoa lien he\n";
     cout << "6. Sap xep danh ba\n";
     cout << "7. Thong ke moi quan he\n";
+    cout << "8. Loc theo moi quan he\n";
     cout << "0. Luu & Thoat\n";
     cout << "Chon chuc nang: ";
 }
+
 int main() 
 {
     ContactManager mgr;
@@ -32,6 +42,7 @@ int main()
     {
         cout << "Chua co file - bat dau danh ba rong.\n"; 
     }
+
     int choice;
     do 
     {
@@ -51,6 +62,7 @@ int main()
             mgr.displayAll();
             break;
         }
+
         case 2: 
         {
             string name, phone, rel;
@@ -83,6 +95,7 @@ int main()
             }
             break;
         }
+
         case 3: 
         {
             string kw;
@@ -92,6 +105,7 @@ int main()
             printList(res);
             break;
         }
+
         case 4: 
         {
             string phone, newName, newRel;
@@ -106,6 +120,7 @@ int main()
             if (mgr.updateByPhone(phone, newName, newRel)) cout << "Cap nhat thanh cong!\n";
             break;
         }
+
         case 5: 
         {
             string name;
@@ -115,6 +130,7 @@ int main()
             else cout << "Khong tim thay ten nay!\n";
             break;
         }
+
         case 6: 
         {
             cout << "Sap xep (1 = Tang dan theo ten, 2 = Giam dan): ";
@@ -127,6 +143,7 @@ int main()
             else cout << "Lua chon khong hop le.\n";
             break;
         }
+
         case 7: 
         {
             cout << "\n--- THONG KE ---\n";
@@ -137,6 +154,22 @@ int main()
             }
             break;
         }
+
+        case 8:
+        {
+            string relationship;
+
+            cout << "Nhap moi quan he can loc: ";
+            getline(cin, relationship);
+
+            vector<Contact> result = mgr.filterByRelationship(relationship);
+
+            cout << "\n--- DANH SACH THEO MOI QUAN HE ---\n";
+            printList(result);
+
+            break;
+        }
+
         case 0: 
         {
             mgr.saveToFile(FILE_NAME);
@@ -145,6 +178,9 @@ int main()
         }
         default: cout << "Khong hop le!\n"; break;
         }
-    } while (choice != 0);
+    }
+
+    while (choice != 0);
+
     return 0;
 }

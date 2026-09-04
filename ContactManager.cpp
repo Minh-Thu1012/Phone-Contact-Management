@@ -1,8 +1,16 @@
+/*
+    Implementation of the ContactManager class.
+    Handles contact management operations including file I/O,
+    searching, sorting, filtering, adding, updating, deleting,
+    and relationship statistics.
+*/
+
 #include "ContactManager.h"
 #include <fstream>
 #include <algorithm>
 #include <cctype>
 #include <functional>
+
 string ContactManager::toLower(const string& s) 
 {
     string res = s;
@@ -12,11 +20,13 @@ string ContactManager::toLower(const string& s)
     }
     return res;
 }
+
 bool ContactManager::hasPhone(const string& p) const 
 {
     Contact key("", p); 
     return find(contacts.begin(), contacts.end(), key) != contacts.end();
 }
+
 int ContactManager::countName(const string& name) const 
 {
     int count = 0;
@@ -30,6 +40,7 @@ int ContactManager::countName(const string& name) const
     }
     return count;
 }
+
 bool ContactManager::loadFromFile(const string& f) 
 {
     ifstream fin(f);
@@ -57,6 +68,7 @@ bool ContactManager::saveToFile(const string& f) const
     }
     return true;
 }
+
 bool ContactManager::addContact(const Contact& c) 
 {
     if (!Person::isValidPhone(c.getPhone())) return false; 
@@ -64,6 +76,7 @@ bool ContactManager::addContact(const Contact& c)
     contacts.push_back(c);
     return true;
 }
+
 void ContactManager::displayAll() const 
 {
     for (size_t i = 0; i < contacts.size(); i++) 
@@ -73,6 +86,7 @@ void ContactManager::displayAll() const
         p.display();
     }
 }
+
 bool ContactManager::updateByPhone(const string& phone, const string& newName, const string& newRel) 
 {
     Contact key("", phone); 
@@ -82,6 +96,7 @@ bool ContactManager::updateByPhone(const string& phone, const string& newName, c
     if (!newRel.empty())  it->setRelationship(newRel);
     return true;
 }
+
 int ContactManager::deleteByName(const string& name) 
 {
     int count = 0;
@@ -98,6 +113,7 @@ int ContactManager::deleteByName(const string& name)
     }
     return count;
 }
+
 vector<Contact> ContactManager::searchByName(const string& keyword) const 
 {
     vector<Contact> result;
@@ -111,6 +127,7 @@ vector<Contact> ContactManager::searchByName(const string& keyword) const
     }
     return result; 
 }
+
 void ContactManager::sortByName(bool ascending) 
 {
     if (ascending)
@@ -118,6 +135,7 @@ void ContactManager::sortByName(bool ascending)
     else
         sort(contacts.begin(), contacts.end(), greater<Contact>());
 }
+
 map<string, int> ContactManager::statistics() const 
 {
     map<string, int> stat;
@@ -126,4 +144,20 @@ map<string, int> ContactManager::statistics() const
         stat[contacts[i].getRelationship()]++;
     }
     return stat;
+}
+
+vector<Contact> ContactManager::filterByRelationship(const string& relationship) const
+{
+    vector<Contact> result;
+    string target = toLower(relationship);
+
+    for (size_t i = 0; i < contacts.size(); i++)
+    {
+        if (toLower(contacts[i].getRelationship()) == target)
+        {
+            result.push_back(contacts[i]);
+        }
+    }
+
+    return result;
 }

@@ -1,18 +1,25 @@
+/*
+    Implementation of the Person class.
+    Handles name formatting, phone number validation,
+    getters, setters, and other Person-related functions.
+*/
+
 #include "Person.h"
 #include <iostream>
 #include <cctype>
-Person::Person(string name, string phone) 
+
+Person::Person(string name, string phone)
 {
-    this->name = name;
+    setName(name);
     this->phone = phone;
 }
+
 Person::~Person() {}
+
 string Person::getName() const { return name; }
+
 string Person::getPhone() const { return phone; }
-void Person::setName(const string& name) 
-{
-    this->name = name;
-}
+
 void Person::setPhone(const string& phone) 
 {
     if (isValidPhone(phone)) 
@@ -20,6 +27,7 @@ void Person::setPhone(const string& phone)
         this->phone = phone;
     }
 }
+
 bool Person::isValidPhone(const string& phone) 
 {
     if (phone.length() < 9 || phone.length() > 11) return false;
@@ -30,6 +38,7 @@ bool Person::isValidPhone(const string& phone)
     if (phone[0] != '0') return false;
     return true;
 }
+
 void Person::formatName(string& rawName) 
 {
     string result = "";
@@ -59,6 +68,7 @@ void Person::formatName(string& rawName)
     if (!result.empty() && result.back() == ' ') result.pop_back();
     rawName = result;
 }
+
 void Person::setName(const string& name) 
 {
     string formatted = name;
