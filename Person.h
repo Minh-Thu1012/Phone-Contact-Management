@@ -13,6 +13,7 @@ public:
 	string getName() const;
 	string getPhone() const;
 	void setName(const string& name);
+	void formatName(string& rawName);
 	void setPhone(const string& phone);
 	static bool isValidPhone(const string& phone);
 	virtual void display() const = 0;
