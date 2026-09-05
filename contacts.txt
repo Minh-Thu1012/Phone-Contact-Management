@@ -1,0 +1,6 @@
+Nguyen Van An,0901234567,family
+Tran Thi Bich,0912345678,friend
+Le Van Cuong,0923456789,teacher
+Pham Thi Dung,0934567890,colleague
+Nguyen Van An,0945678901,friend
+Hoang Van Em,0956789012,family
